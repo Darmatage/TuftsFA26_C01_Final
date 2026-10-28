@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove3D : MonoBehaviour {
-    //Animator anim;
+    Animator anim;
     Rigidbody rb;
     public Transform cam;
 
@@ -12,7 +12,7 @@ public class PlayerMove3D : MonoBehaviour {
     private float turnSmoothVelocity;
 
     void Start(){
-        //anim = gameObject.GetComponentInChildren<Animator>();
+        anim = gameObject.GetComponentInChildren<Animator>();
         rb = gameObject.GetComponent<Rigidbody>();
         cam = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
     }
@@ -28,10 +28,12 @@ public class PlayerMove3D : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             rb.MovePosition(transform.position + moveDir * speed * Time.deltaTime);
+			anim.SetBool("Walk", true);
         }
         else {
                 GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                 GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+				anim.SetBool("Walk", false);
         }
     }
 } 
