@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc5af776a4142346a1934b12bd1a5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameHandler
-  pauseMenu: {fileID: 0}
+  inventory: {fileID: 0}
+  pauseMenu: {fileID: 8245013297833498052, guid: d1ea95e1fd862494f909ccf29c73ee48, type: 3}

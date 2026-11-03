@@ -9,6 +9,7 @@ using System.Collections;
 public class GameHandler : MonoBehaviour
 {
     private GameObject player;
+    public GameInventory inventory; 
     private bool isPaused = false;
     public GameObject pauseMenu;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +33,16 @@ public class GameHandler : MonoBehaviour
             } else {
                 PauseGame();
             }
+        }
+
+        //manage inventory
+        if (Input.GetKeyDown(KeyCode.I))
+            inventory.OpenCloseInventory();
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            inventory.InventoryAdd("apple");
+            Debug.Log("apple added");
         }
     }
 

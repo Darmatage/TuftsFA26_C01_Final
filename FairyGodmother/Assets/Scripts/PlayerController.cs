@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         mainCam = Camera.main.transform;
-        // cameraFreeLook.Follow = transform;
-        // cameraFreeLook.LookAt = transform;
-        // cameraFreeLook.OnTargetObjectWarped(transform, transform.position - cameraFreeLook.transform.position - Vector3.forward);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,109 +30,116 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     
 
-void Update()
-{
-    // Read movement input
-    movement = new Vector3(
-        Input.GetAxisRaw("Horizontal"),
-        0,
-        Input.GetAxisRaw("Vertical")
-    ).normalized;
-
-    // Jump
-    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+    void Update()
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
-    }
+        //read movement input
+        movement = new Vector3(
+            Input.GetAxisRaw("Horizontal"),
+            0,
+            Input.GetAxisRaw("Vertical")
+        ).normalized;
 
-    // Attack
-    if (Input.GetMouseButtonDown(0))
-    {
-        Attack();
-    }
-}
-
-
-void FixedUpdate()
-{
-    HandleMovement();
-}
-
-
-public void HandleMovement()
-{
-    // Convert input into camera-relative direction on the ground plane
-    Vector3 camForward = mainCam.forward;
-    Vector3 camRight = mainCam.right;
-    camForward.y = 0f;
-    camRight.y = 0f;
-    camForward.Normalize();
-    camRight.Normalize();
-
-    Vector3 adjustedDirection = (camForward * movement.z + camRight * movement.x).normalized;
-
-    if (adjustedDirection.magnitude > ZeroF)
-    {
-        //Debug.Log($"dir: {adjustedDirection}  vel: {rb.linearVelocity}  camFwd: {mainCam.forward}");
-        HandleRotation(adjustedDirection);
-        HandleHorizontalMovement(adjustedDirection);
-    }
-    else
-    {
-        rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-    }
-}
-
-
-void HandleHorizontalMovement(Vector3 adjustedDirection)
-{
-    float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed;
-
-    Vector3 velocity = adjustedDirection * (speed * dashVelocity);
-
-    rb.linearVelocity = new Vector3(
-        velocity.x,
-        rb.linearVelocity.y,
-        velocity.z
-    );
-}
-
-void HandleRotation(Vector3 adjustedDirection)
-{
-    var targetRotation = Quaternion.LookRotation(adjustedDirection);
-
-    transform.rotation = Quaternion.Slerp(
-        transform.rotation,
-        targetRotation,
-        rotationSpeed * Time.fixedDeltaTime
-    );
-}
-
-void SmoothSpeed(float value)
-{
-    currentSpeed = Mathf.SmoothDamp(
-        currentSpeed,
-        value,
-        ref velocity,
-        smoothTime
-    );
-}
-
-void Attack()
-    {
-        Debug.Log("Player attacks!");
-        // Add your attack animation or combat logic here.
-    }
-
-private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        //Jumping when alreayd on the ground
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            isGrounded = true;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
+
+        //Attacking - WRITE CODE FOR IT
+        if (Input.GetMouseButtonDown(0))
+        {
+            Attack();
+        }
+    }
+
+
+    void FixedUpdate()
+    {
+        HandleMovement();
+    }
+
+    //defines camera movement and calls other functions for movement
+    public void HandleMovement()
+    {
+        //define directions
+        Vector3 camForward = mainCam.forward;
+        Vector3 camRight = mainCam.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        //main thing to always update the direction of camera
+        Vector3 adjustedDirection = (camForward * movement.z + camRight * movement.x).normalized;
+
+        //if there is input, call other functions
+        //otherwise set velocity to 0
+        if (adjustedDirection.magnitude > ZeroF)
+        {
+            HandleRotation(adjustedDirection);
+            HandleHorizontalMovement(adjustedDirection);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+        }
+    }
+
+    //defines speed and velocity
+    void HandleHorizontalMovement(Vector3 adjustedDirection)
+    {
+        //left shift should define speed
+        //DOUBLE CHECK IF ITS ACTUALLY HAPPENING
+        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed;
+
+        Vector3 velocity = adjustedDirection * (speed * dashVelocity);
+
+        //sets velocity
+        rb.linearVelocity = new Vector3(
+            velocity.x,
+            rb.linearVelocity.y,
+            velocity.z
+        );
+    }
+
+    //rotation based on direction
+    void HandleRotation(Vector3 adjustedDirection)
+    {
+        var targetRotation = Quaternion.LookRotation(adjustedDirection);
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.fixedDeltaTime
+        );
+    }
+
+
+    // void SmoothSpeed(float value)
+    // {
+    //     currentSpeed = Mathf.SmoothDamp(
+    //         currentSpeed,
+    //         value,
+    //         ref velocity,
+    //         smoothTime
+    //     );
+    // }
+
+    void Attack()
+        {
+            Debug.Log("Player attacks!");
+            //ADD STH HERE
+        }
+
+    //check if standing on the ground for jump purposes
+    private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                isGrounded = true;
+            }
     }
 }
