@@ -43,6 +43,9 @@ public class GameHandler : MonoBehaviour
         {
             inventory.InventoryAdd("apple");
             Debug.Log("apple added");
+        } else if (Input.GetKeyDown(KeyCode.O)){
+            inventory.InventoryAdd("wood");
+            Debug.Log("wood added");
         }
     }
 

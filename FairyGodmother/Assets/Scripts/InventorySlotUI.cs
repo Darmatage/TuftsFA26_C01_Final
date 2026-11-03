@@ -40,8 +40,13 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     //enables clicking to utilize as buff or ingredient
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log($"CLICK on {itemId}, button: {eventData.button}, count: {currentCount}");
         if (eventData.button == PointerEventData.InputButton.Right && currentCount > 0)
-            inventory.UseItem(itemId);
+        {
+            bool used = inventory.UseItem(itemId);
+            Debug.Log($"UseItem returned {used}");
+        }
+    
     }
 
     //CHECK IF WORKS, SHOULD BE DRAGGABLE, NEED TO ADD EXTRA STUFF
