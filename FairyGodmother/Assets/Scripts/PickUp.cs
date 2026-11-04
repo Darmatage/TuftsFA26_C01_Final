@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour{
 
-      public GameHandler gameHandler;
-      public AudioSource SoundFX;
+      private GameHandler gameHandler;
+      private AudioSource SoundFX;
+	  public GameObject pickupArt;
       //public playerVFX playerPowerupVFX;
       //public bool isHealthPickUp = true;
       //public bool isSpeedBoostPickUp = false;
@@ -22,8 +23,9 @@ public class PickUp : MonoBehaviour{
 
       public void OnTriggerEnter (Collider other){
             if (other.gameObject.tag == "Player"){
-                  GetComponent<Collider>().enabled = false;
-                  //GetComponent< AudioSource>().Play();
+				GetComponent<Collider>().enabled = false;
+				pickupArt.SetActive(false);
+                  
                   StartCoroutine(DestroyThis());
 /*
                   if (isHealthPickUp == true) {

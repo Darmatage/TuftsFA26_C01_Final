@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8862665512827207475}
   - component: {fileID: 1920720406162270729}
-  - component: {fileID: 8993577430796427656}
   - component: {fileID: 5925740778324244667}
   - component: {fileID: 794759370470663846}
+  - component: {fileID: 8993577430796427656}
   m_Layer: 0
   m_Name: PickUp
   m_TagString: Untagged
@@ -57,6 +57,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5925740778324244667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291607187359981075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619c75c748d81d94db1c1dae014b28f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickUp
+  pickupArt: {fileID: 8607048932828990163}
+--- !u!114 &794759370470663846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291607187359981075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b2df92aadc06e4cb8b6939a072d3ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickUp_UpDown
+  speedS: 2.5
+  distS: 0.25
 --- !u!82 &8993577430796427656
 AudioSource:
   m_ObjectHideFlags: 0
@@ -154,34 +181,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5925740778324244667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4291607187359981075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 619c75c748d81d94db1c1dae014b28f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickUp
-  gameHandler: {fileID: 0}
-  SoundFX: {fileID: 0}
---- !u!114 &794759370470663846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4291607187359981075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b2df92aadc06e4cb8b6939a072d3ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickUp_UpDown
-  speedS: 2.5
-  distS: 0.5
 --- !u!1 &8607048932828990163
 GameObject:
   m_ObjectHideFlags: 0

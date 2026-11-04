@@ -167,9 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d147694325bf534b87a7e1eb8c66e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  cameraFreeLook: {fileID: 0}
-  moveSpeed: 2
-  runSpeed: 0.5
+  moveSpeed: 10
+  runSpeed: 20
   jumpForce: 15
   rotationSpeed: 15
   smoothTime: 0.1

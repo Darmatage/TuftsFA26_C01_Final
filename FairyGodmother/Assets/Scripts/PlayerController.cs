@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CinemachineCamera cameraFreeLook;
+    private CinemachineCamera cameraFreeLook;
     public float moveSpeed = 5f;
     public float runSpeed = 8f;
     public float jumpForce = 5f;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+		cameraFreeLook = GameObject.FindWithTag("Freelook").GetComponent<CinemachineCamera>();
     }
 
     
