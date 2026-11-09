@@ -8,6 +8,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 7a87bce5a0bded646a43db805e69d9bd
+  - enabled: 1
+    path: Assets/Scenes/GameplayScene.unity
+    guid: 0609dd33c918c94469dfc068543608d0
+  - enabled: 1
+    path: Assets/Scenes/Level3_Khrys.unity
+    guid: 0bbbe4a2ebfd6ce4d95f9410d98687c2
+  - enabled: 1
+    path: Assets/Scenes/LoseScene.unity
+    guid: 3144fe09da8cf1148a44efd38bcd3538
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 916789eb3a18d654dabf21d9e0344057
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 3b12bf07e8a554b4793a23be8a77caa8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
