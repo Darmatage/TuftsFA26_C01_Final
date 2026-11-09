@@ -4,11 +4,13 @@ using Unity.Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     private CinemachineCamera cameraFreeLook;
+
     public float moveSpeed = 5f;
     public float runSpeed = 8f;
     public float jumpForce = 5f;
     public float rotationSpeed = 15f;
     public float smoothTime = 0.1f;
+
     float dashVelocity = 1f;
 
     Transform mainCam;
@@ -17,67 +19,105 @@ public class PlayerController : MonoBehaviour
     Vector3 movement;
     float currentSpeed;
     float velocity;
+
     private Rigidbody rb;
     private bool isGrounded = true;
+
+    // Moving platform variables
+    private Transform currentPlatform;
+    private Vector3 lastPlatformPosition;
+    private Quaternion lastPlatformRotation;
 
     void Awake()
     {
         mainCam = Camera.main.transform;
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-		cameraFreeLook = GameObject.FindWithTag("Freelook").GetComponent<CinemachineCamera>();
-    }
 
-    
+        cameraFreeLook = GameObject.FindWithTag("Freelook")
+            .GetComponent<CinemachineCamera>();
+    }
 
     void Update()
     {
-        //read movement input
+        // Read movement input
         movement = new Vector3(
             Input.GetAxisRaw("Horizontal"),
             0,
             Input.GetAxisRaw("Vertical")
         ).normalized;
 
-        //Jumping when alreayd on the ground
+        // Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
             isGrounded = false;
+
+            // Stop following platform when jumping
+            currentPlatform = null;
         }
 
-        //Attacking - WRITE CODE FOR IT
+        // Attack
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
         }
     }
 
-
     void FixedUpdate()
     {
+        HandlePlatformMovement();
         HandleMovement();
     }
 
-    //defines camera movement and calls other functions for movement
+    // Apply platform movement to player
+    void HandlePlatformMovement()
+    {
+        if (currentPlatform == null)
+            return;
+
+        Vector3 platformMovement =
+            currentPlatform.position - lastPlatformPosition;
+
+        Quaternion platformRotation =
+            currentPlatform.rotation * Quaternion.Inverse(lastPlatformRotation);
+
+        // Move player with platform
+        Vector3 relativePosition =
+            rb.position - lastPlatformPosition;
+
+        Vector3 rotatedPosition =
+            platformRotation * relativePosition;
+
+        Vector3 newPosition =
+            lastPlatformPosition + rotatedPosition + platformMovement;
+
+        rb.MovePosition(newPosition);
+
+        // Update previous platform transform
+        lastPlatformPosition = currentPlatform.position;
+        lastPlatformRotation = currentPlatform.rotation;
+    }
+
+    // Detect movement input
     public void HandleMovement()
     {
-        //define directions
         Vector3 camForward = mainCam.forward;
         Vector3 camRight = mainCam.right;
+
         camForward.y = 0f;
         camRight.y = 0f;
+
         camForward.Normalize();
         camRight.Normalize();
 
-        //main thing to always update the direction of camera
-        Vector3 adjustedDirection = (camForward * movement.z + camRight * movement.x).normalized;
+        Vector3 adjustedDirection =
+            (camForward * movement.z + camRight * movement.x).normalized;
 
-        //if there is input, call other functions
-        //otherwise set velocity to 0
         if (adjustedDirection.magnitude > ZeroF)
         {
             HandleRotation(adjustedDirection);
@@ -85,31 +125,36 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            rb.linearVelocity = new Vector3(
+                0f,
+                rb.linearVelocity.y,
+                0f
+            );
         }
     }
 
-    //defines speed and velocity
+    // Horizontal movement
     void HandleHorizontalMovement(Vector3 adjustedDirection)
     {
-        //left shift should define speed
-        //DOUBLE CHECK IF ITS ACTUALLY HAPPENING
-        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed;
+        float speed = Input.GetKey(KeyCode.LeftShift)
+            ? runSpeed
+            : moveSpeed;
 
-        Vector3 velocity = adjustedDirection * (speed * dashVelocity);
+        Vector3 newVelocity =
+            adjustedDirection * (speed * dashVelocity);
 
-        //sets velocity
         rb.linearVelocity = new Vector3(
-            velocity.x,
+            newVelocity.x,
             rb.linearVelocity.y,
-            velocity.z
+            newVelocity.z
         );
     }
 
-    //rotation based on direction
+    // Player rotation
     void HandleRotation(Vector3 adjustedDirection)
     {
-        var targetRotation = Quaternion.LookRotation(adjustedDirection);
+        var targetRotation =
+            Quaternion.LookRotation(adjustedDirection);
 
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
@@ -118,29 +163,52 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-
-    // void SmoothSpeed(float value)
-    // {
-    //     currentSpeed = Mathf.SmoothDamp(
-    //         currentSpeed,
-    //         value,
-    //         ref velocity,
-    //         smoothTime
-    //     );
-    // }
-
     void Attack()
-        {
-            Debug.Log("Player attacks!");
-            //ADD STH HERE
-        }
+    {
+        Debug.Log("Player attacks!");
+    }
 
-    //check if standing on the ground for jump purposes
+    // Detect ground and moving platforms
     private void OnCollisionEnter(Collision collision)
+    {
+        CheckPlatform(collision);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        CheckPlatform(collision);
+    }
+
+    void CheckPlatform(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
         {
-            if (collision.gameObject.CompareTag("Ground"))
+            // Only detect surfaces underneath the player
+            if (contact.normal.y > 0.5f)
             {
                 isGrounded = true;
+
+                if (collision.gameObject.CompareTag("Ground"))
+                {
+                    if (currentPlatform != collision.transform)
+                    {
+                        currentPlatform = collision.transform;
+
+                        lastPlatformPosition = currentPlatform.position;
+                        lastPlatformRotation = currentPlatform.rotation;
+                    }
+                }
+
+                return;
             }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (currentPlatform == collision.transform)
+        {
+            currentPlatform = null;
+        }
     }
 }
