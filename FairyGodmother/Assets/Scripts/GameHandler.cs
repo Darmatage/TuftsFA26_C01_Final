@@ -12,6 +12,8 @@ public class GameHandler : MonoBehaviour
     public GameInventory inventory; 
     private bool isPaused = false;
     public GameObject pauseMenu;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,7 +41,7 @@ public class GameHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
             inventory.OpenCloseInventory();
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             inventory.InventoryAdd("apple");
             Debug.Log("apple added");
@@ -48,6 +50,7 @@ public class GameHandler : MonoBehaviour
             Debug.Log("wood added");
         }
     }
+
 
     public void StartGame() {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MapScene");

@@ -344,7 +344,15 @@ MonoBehaviour:
   - id: wood
     displayName: Wood
     icon: {fileID: 0}
-    usable: 1
+    usable: 0
+    buffType: 1
+    buffMultiplier: 0
+    buffDuration: 0
+    ingredient: 1
+  - id: level3finish
+    displayName: Secret3
+    icon: {fileID: 0}
+    usable: 0
     buffType: 1
     buffMultiplier: 0
     buffDuration: 0

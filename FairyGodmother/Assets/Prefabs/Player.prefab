@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 1885225474310992145}
   - component: {fileID: 7595067899408384918}
   - component: {fileID: 8096819611159814555}
+  - component: {fileID: 7279803928188851642}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -207,6 +208,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7507aaf6f3a9c3a469287ace8ea227b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBuffs
+--- !u!114 &7279803928188851642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359470704366574990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271080cc79b48b941b937618a6431ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPickup
+  inventory: {fileID: 0}
+  pickupSound: {fileID: 0}
 --- !u!1 &8780453060103706985
 GameObject:
   m_ObjectHideFlags: 0

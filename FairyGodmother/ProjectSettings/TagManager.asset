@@ -7,6 +7,9 @@ TagManager:
   - CinemachineTarget
   - Ground
   - GameHandler
+  - Freelook
+  - LevelFinish
+  - PickUp
   layers:
   - Default
   - TransparentFX
