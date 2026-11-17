@@ -338,14 +338,14 @@ MonoBehaviour:
     icon: {fileID: 0}
     usable: 1
     buffType: 1
-    buffMultiplier: 1.5
+    buffMultiplier: 4
     buffDuration: 5
     ingredient: 1
-  - id: wood
-    displayName: Wood
+  - id: pixie dust
+    displayName: Pixie Dust
     icon: {fileID: 0}
-    usable: 0
-    buffType: 1
+    usable: 1
+    buffType: 0
     buffMultiplier: 0
     buffDuration: 0
     ingredient: 1
@@ -356,6 +356,38 @@ MonoBehaviour:
     buffType: 1
     buffMultiplier: 0
     buffDuration: 0
+    ingredient: 1
+  - id: dress
+    displayName: Dress
+    icon: {fileID: 0}
+    usable: 0
+    buffType: 1
+    buffMultiplier: 0
+    buffDuration: 0
+    ingredient: 1
+  - id: pumpkin
+    displayName: Pumpkin
+    icon: {fileID: 0}
+    usable: 1
+    buffType: 0
+    buffMultiplier: 2
+    buffDuration: 10
+    ingredient: 1
+  - id: golden thread
+    displayName: Golden Thread
+    icon: {fileID: 0}
+    usable: 0
+    buffType: 0
+    buffMultiplier: 2
+    buffDuration: 10
+    ingredient: 1
+  - id: thread
+    displayName: Thread
+    icon: {fileID: 0}
+    usable: 0
+    buffType: 0
+    buffMultiplier: 2
+    buffDuration: 10
     ingredient: 1
 --- !u!1 &5653103263819767960
 GameObject:
