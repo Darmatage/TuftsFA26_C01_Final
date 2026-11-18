@@ -565,7 +565,7 @@ MonoBehaviour:
   flyForce: 20
   isAlive: 1
   groundPos: 0
-  jumpForce: 0
+  jumpForce: 4
 --- !u!1 &935299713
 GameObject:
   m_ObjectHideFlags: 0
