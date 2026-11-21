@@ -10,7 +10,7 @@ public class Level3Handler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        level3End.SetActive(false);
     }
 
     // Update is called once per frame
