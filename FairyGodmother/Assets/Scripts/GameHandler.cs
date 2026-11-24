@@ -53,7 +53,7 @@ public class GameHandler : MonoBehaviour
 
 
     public void StartGame() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MapScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("PotionRoom3");
     }
 
     public void MainMenu() {
