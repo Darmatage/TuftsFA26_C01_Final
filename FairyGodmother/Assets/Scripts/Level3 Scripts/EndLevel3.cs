@@ -5,10 +5,13 @@ public class EndLevel3 : MonoBehaviour
 {
     public string sceneToLoad = "GameplayScene";   // must match the scene name exactly
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (!other.CompareTag("Player")) return;
+        Debug.Log($"[EndLevel3] hit by '{collision.gameObject.name}' (tag: {collision.gameObject.tag})");
 
+        if (!collision.gameObject.CompareTag("Player")) return;
+
+        Debug.Log("loading");
         SceneManager.LoadScene(sceneToLoad);
     }
 }

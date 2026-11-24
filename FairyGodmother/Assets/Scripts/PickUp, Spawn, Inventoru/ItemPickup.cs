@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public string itemId;   // must match an id in GameInventory's Item Definitions list
+    public string itemId;   
     public int amount = 1;
 }

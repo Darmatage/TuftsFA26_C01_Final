@@ -11,6 +11,13 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 15f;
     public float smoothTime = 0.1f;
 
+    public float airBoostSpeed = 14f;
+    public float airBoostDuration = 0.25f;
+
+    bool hasAirBoosted;
+    float airBoostTimer;
+    Vector3 airBoostDirection;
+
     float dashVelocity = 1f;
 
     Transform mainCam;
@@ -66,6 +73,13 @@ public class PlayerController : MonoBehaviour
         {
             Attack();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isGrounded && !hasAirBoosted)
+        {
+            hasAirBoosted = true;
+            airBoostTimer = airBoostDuration;
+            airBoostDirection = GetMoveDirection();
+        }
     }
 
     void FixedUpdate()
@@ -106,6 +120,18 @@ public class PlayerController : MonoBehaviour
     // Detect movement input
     public void HandleMovement()
     {
+
+        if (airBoostTimer > 0f)
+        {
+            airBoostTimer -= Time.fixedDeltaTime;
+            rb.linearVelocity = new Vector3(
+                airBoostDirection.x * airBoostSpeed,
+                rb.linearVelocity.y,
+                airBoostDirection.z * airBoostSpeed
+            );
+            return;
+        }
+
         Vector3 camForward = mainCam.forward;
         Vector3 camRight = mainCam.right;
 
@@ -150,6 +176,21 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    Vector3 GetMoveDirection()
+    {
+        Vector3 camForward = mainCam.forward;
+        Vector3 camRight = mainCam.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 dir = (camForward * movement.z + camRight * movement.x).normalized;
+
+        // No input held: boost the way the player is facing
+        return dir.magnitude > 0f ? dir : transform.forward;
+    }
+
     // Player rotation
     void HandleRotation(Vector3 adjustedDirection)
     {
@@ -181,12 +222,16 @@ public class PlayerController : MonoBehaviour
 
     void CheckPlatform(Collision collision)
     {
+        if (rb.linearVelocity.y > 0.1f)
+            return;
+            
         foreach (ContactPoint contact in collision.contacts)
         {
             // Only detect surfaces underneath the player
             if (contact.normal.y > 0.5f)
             {
                 isGrounded = true;
+                hasAirBoosted = false;
 
                 if (collision.gameObject.CompareTag("Ground"))
                 {
