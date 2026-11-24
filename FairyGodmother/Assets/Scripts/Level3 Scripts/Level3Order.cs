@@ -7,6 +7,8 @@ public class Level3Order : MonoBehaviour
 {
     public GameObject textObject;
     public TMP_Text dialogueText;
+    public GameObject guideText;
+    public GameObject pressTtext;
 
     private bool playerNearby = false;
     private int dialogueIndex = 0;
@@ -14,6 +16,8 @@ public class Level3Order : MonoBehaviour
     void Start()
     {
         textObject.SetActive(false);
+        guideText.SetActive(true);
+        pressTtext.SetActive(false);
     }
 
     void OnCollisionEnter(Collision other)
@@ -24,6 +28,8 @@ public class Level3Order : MonoBehaviour
             dialogueIndex = 0;
 
             textObject.SetActive(true);
+            guideText.SetActive(false);
+            pressTtext.SetActive(true);
             dialogueText.text = "I want to order something that you can find on Level 3.";
         }
     }
@@ -36,6 +42,7 @@ public class Level3Order : MonoBehaviour
             {
                 dialogueText.text = "Gotcha!";
                 dialogueIndex = 1;
+                pressTtext.SetActive(false);
             }
             else if (dialogueIndex == 1)
             {

@@ -205,6 +205,8 @@ MonoBehaviour:
   jumpForce: 4
   rotationSpeed: 15
   smoothTime: 0.1
+  airBoostSpeed: 14
+  airBoostDuration: 0.25
 --- !u!136 &7595067899408384918
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -220,7 +222,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
